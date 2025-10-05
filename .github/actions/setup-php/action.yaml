@@ -47,18 +47,18 @@ runs:
       id: composer-cache
       shell: bash
       run: |
-        echo "::set-output name=dir::./.composer"
+        echo "{name}={value}" >> $GITHUB_OUTPUT
     - uses: actions/cache@v4
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock', '*/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-composer-
     - uses: actions/cache@v4
       id: cache-vendors
       with:
         path: vendor
-        key: ${{ runner.os }}-vendors-${{ hashFiles('**/composer.lock') }}
+        key: ${{ runner.os }}-vendors-${{ hashFiles('composer.lock', '*/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-vendors-
     - name: Composer install if vendor cache does not hit
