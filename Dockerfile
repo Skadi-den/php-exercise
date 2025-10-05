@@ -67,6 +67,13 @@ RUN set -eux; \
 
 COPY --link frankenphp/conf.d/20-app.dev.ini $PHP_INI_DIR/app.conf.d/
 
+RUN --mount=type=secret,id=GIT_AUTH_TOKEN \
+ GIT_AUTH_TOKEN=$(cat /run/secrets/GIT_AUTH_TOKEN) \
+# && git config --global url.".https://${GIT_AUTH_TOKEN}@github.com".insteadof git@github.com: \
+ && git config --global "url.https://${GIT_AUTH_TOKEN}@github.com.insteadof" "git@github.com:"
+# && git config --global "url.https://${GIT_AUTH_TOKEN}@github.com.insteadof" "https://github.com" \
+# && mix deps.get --only $MIX_ENV
+
 CMD [ "frankenphp", "run", "--config", "/etc/frankenphp/Caddyfile", "--watch" ]
 
 # Prod FrankenPHP image

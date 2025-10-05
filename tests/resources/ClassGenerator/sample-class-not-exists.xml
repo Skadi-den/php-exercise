@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<classes>
+<class id="Ga"/>
+<class id="Bu">
+    <parent>
+        <class id="Gad"/>
+    </parent>
+</class>
+<class id="Zo">
+    <parent>
+        <class id="Bu"/>
+    </parent>
+</class>
+<class id="Meu">
+    <parent>
+        <class id="Ga"/>
+    </parent>
+</class>
+</classes>
