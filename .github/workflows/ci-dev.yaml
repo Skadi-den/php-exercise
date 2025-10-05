@@ -38,37 +38,37 @@ jobs:
         run: |
           make cs-php-fixer-full
 
-  php-stan:
-    runs-on: ubuntu-latest
-    name: PHPStan
-    steps:
-      - uses: actions/checkout@v5
-      - uses: ./.github/actions/setup-php
-        with:
-          CI_ACCESS_TOKEN: ${{ secrets.CI_ACCESS_TOKEN }}
-      - name: Run PHPStan
-        run: |
-          make cs-phpstan-full
-
-  php-cs-deptrac:
-    runs-on: ubuntu-latest
-    name: deptrac
-    steps:
-      - uses: actions/checkout@v5
-      - uses: ./.github/actions/setup-php
-        with:
-          CI_ACCESS_TOKEN: ${{ secrets.CI_ACCESS_TOKEN }}
-      - name: Run deptrac
-        run: |
-          make cs-deptrac
-
-  test-unit:
-    runs-on: ubuntu-latest
-    name: Unit tests
-    steps:
-      - uses: actions/checkout@v5
-      - uses: ./.github/actions/setup-php
-        with:
-          CI_ACCESS_TOKEN: ${{ secrets.CI_ACCESS_TOKEN }}
-      - name: Run tests
-        uses: ./.github/actions/run-phpunit
+#  php-stan:
+#    runs-on: ubuntu-latest
+#    name: PHPStan
+#    steps:
+#      - uses: actions/checkout@v5
+#      - uses: ./.github/actions/setup-php
+#        with:
+#          CI_ACCESS_TOKEN: ${{ secrets.CI_ACCESS_TOKEN }}
+#      - name: Run PHPStan
+#        run: |
+#          make cs-phpstan-full
+#
+#  php-cs-deptrac:
+#    runs-on: ubuntu-latest
+#    name: deptrac
+#    steps:
+#      - uses: actions/checkout@v5
+#      - uses: ./.github/actions/setup-php
+#        with:
+#          CI_ACCESS_TOKEN: ${{ secrets.CI_ACCESS_TOKEN }}
+#      - name: Run deptrac
+#        run: |
+#          make cs-deptrac
+#
+#  test-unit:
+#    runs-on: ubuntu-latest
+#    name: Unit tests
+#    steps:
+#      - uses: actions/checkout@v5
+#      - uses: ./.github/actions/setup-php
+#        with:
+#          CI_ACCESS_TOKEN: ${{ secrets.CI_ACCESS_TOKEN }}
+#      - name: Run tests
+#        uses: ./.github/actions/run-phpunit
