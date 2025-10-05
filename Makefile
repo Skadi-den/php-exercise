@@ -38,6 +38,7 @@ bash: ## Connect to the FrankenPHP container via bash so up and down arrows go t
 	@$(DOCKER_COMP) exec php bash
 
 test: ## Start tests with phpunit, pass the parameter "c=" to add options to phpunit, example: make test c="--group e2e --stop-on-failure"
+	@echo "${BLUE}Running tests...${RESET}"
 	@$(eval c ?=)
 	@$(DOCKER_COMP) exec -e APP_ENV=test php bin/phpunit $(c)
 
@@ -64,23 +65,22 @@ hooks-install: ##@git-hooks Install or re-init git hooks
 	@$(DOCKER_COMP) exec php vendor/bin/grumphp git:init
 	#$(call run-php, ./vendor/bin/grumphp git:init)
 
-hook-pre-commit: hook-branch-name-checker cs ##@git-hooks Run pre-commit checks
+hook-pre-commit: cs ##@git-hooks Run pre-commit checks
 
 hook-commit-msg: ##@git-hooks Execute the commit linter
 	$(call run-php-script, ./vendor/bin/grumphp git:commit-msg "--git-user=${GRUMPHP_GIT_USER}" "--git-email=${GRUMPHP_GIT_EMAIL}" "${GRUMPHP_COMMIT_MSG_FILE}")
 
-hook-branch-name-checker: ##@git-hooks Check the naming of the current branch
-	@echo "${BLUE}Running branch name checker ${RESET}"
-	@./bin/branch-name-checker.sh
-
 ## CI ENVIRONMENT
 cs-phpstan:
+	@echo "${BLUE}Running phpstan...${RESET}"
 	@$(PHP_CONT) vendor/bin/phpstan analyse src tests
 
 cs-deptrac:
+	@echo "${BLUE}Running deptrac...${RESET}"
 	@$(PHP_CONT) vendor/bin/deptrac
 
 ci-cs-fixer:
+	@echo "${BLUE}Running php-cs-fixer...${RESET}"
 	@$(PHP_CONT) vendor/bin/php-cs-fixer fix src
 	#@$(PHP_CONT) vendor/bin/php-cs-fixer fix src --dry-run
 	@$(PHP_CONT) vendor/bin/php-cs-fixer fix tests
