@@ -1,0 +1,40 @@
+deptrac:
+  paths:
+    - ./src
+  exclude_files:
+    - '#.*test.*#'
+  layers:
+    - name: DomainInterfaces
+      collectors:
+        - type: bool
+          must:
+            - type: directory
+              value: src/.*/Domain/.*
+            - type: interface
+              value: .*
+    - name: Domain
+      collectors:
+        - type: bool
+          must:
+            - type: directory
+              value: src/.*/Domain/.*
+          must_not:
+            - type: layer
+              value: DomainInterfaces
+    - name: Application
+      collectors:
+        - type: directory
+          value: src/.*/Application/.*
+    - name: Infrastructure
+      collectors:
+        - type: directory
+          value: src/.*/Infrastructure/.*
+  ruleset:
+    Infrastructure:
+      - DomainInterfaces
+    Application:
+      - DomainInterfaces
+    Domain:
+      - DomainInterfaces
+    DomainInterfaces:
+      - Domain

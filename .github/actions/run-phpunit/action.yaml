@@ -1,0 +1,27 @@
+name: "Run phpunit test for a specific suite"
+description: "Run phpunit test for a specific suite"
+
+inputs:
+  enable_pcov:
+    description: "Load PCOV PHP module"
+    required: false
+    default: 'false'
+  additional_option:
+    description: "Additional options for phpunit"
+    required: false
+
+runs:
+  using: "composite"
+  steps:
+    - name: Enable PCOV
+      shell: bash
+      run:  |
+        if echo ${{ inputs.enable_pcov }} | grep -c "true"
+        then
+          echo "Enable PCOV PHP module"
+          docker-compose exec -T -u root php docker-php-ext-enable pcov
+        fi
+    - name: Run PHPUnit suite
+      shell: bash
+      run: |
+        docker-compose exec -T php php -dmemory_limit=-1 ./vendor/bin/simple-phpunit --testdox
