@@ -68,6 +68,6 @@ runs:
         then
           echo "Cache hit - skipping composer install"
         else
-          docker-compose exec -T -e COMPOSER_CACHE_DIR=./.composer php composer install
-          docker-compose exec -T php php vendor/bin/simple-phpunit --version
+          docker compose exec -T -e COMPOSER_CACHE_DIR=./.composer php composer install
+          docker compose exec -T php php vendor/bin/simple-phpunit --version
         fi

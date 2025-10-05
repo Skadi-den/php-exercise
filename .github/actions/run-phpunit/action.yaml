@@ -19,9 +19,9 @@ runs:
         if echo ${{ inputs.enable_pcov }} | grep -c "true"
         then
           echo "Enable PCOV PHP module"
-          docker-compose exec -T -u root php docker-php-ext-enable pcov
+          docker compose exec -T -u root php docker-php-ext-enable pcov
         fi
     - name: Run PHPUnit suite
       shell: bash
       run: |
-        docker-compose exec -T php php -dmemory_limit=-1 ./vendor/bin/simple-phpunit --testdox
+        docker compose exec -T php php -dmemory_limit=-1 ./vendor/bin/simple-phpunit --testdox
